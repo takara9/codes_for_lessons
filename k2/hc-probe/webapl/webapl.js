@@ -5,12 +5,23 @@ var start = Date.now()
 app.get('/healthz', function(request, response) {
     var msec = Date.now() - start
     var code = 200
-    if (msec > 30000 ) {
+    if (msec > 20000 ) {
 	code = 500
     }
     console.log('GET /healthz ' + code)
     response.status(code).send('OK')
 })
+
+app.get('/ready', function(request, response) {
+    var msec = Date.now() - start
+    var code = 200
+    if (msec > 30000 ) {
+	code = 500
+    }
+    console.log('GET /ready ' + code)
+    response.status(code).send('OK')
+})
+
 
 app.get('/', function(request, response) {
     console.log('GET /')
