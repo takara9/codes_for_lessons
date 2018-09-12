@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: webapl
-    image: maho/webapl:0.1
+    image: maho/webapl:0.3
     livenessProbe:
       httpGet:
         path: /healthz
@@ -16,5 +16,5 @@ spec:
       httpGet:
         path: /ready
         port: 3000
-      initialDelaySeconds: 25
+      initialDelaySeconds: 15
       periodSeconds: 6

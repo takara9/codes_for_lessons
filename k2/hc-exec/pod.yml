@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: probe-test
+spec:
+  containers:
+  - name: alpine
+    image: alpine:latest
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep 15; touch /tmp/ready; sleep 30; rm -rf /tmp/healthy; sleep 600
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+    readinessProbe:
+      exec:
+        command:
+	- cat
+	- /tmp/ready
+      initialDelaySeconds: 6
+      periodSeconds: 3
