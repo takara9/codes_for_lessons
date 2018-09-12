@@ -5,16 +5,16 @@ metadata:
 spec:
   containers:
   - name: webapl
-    image: maho/webapl:0.3
-    livenessProbe:
+    image: maho/webapl:0.1    # (1)ハンドラ実装済みアプリケーション
+    livenessProbe:            # (2)稼働探査
       httpGet:
-        path: /healthz
+        path: /healthz        # 稼働探査のハンドラー
         port: 3000
-      initialDelaySeconds: 3
-      periodSeconds: 5
-    readinessProbe:
+      initialDelaySeconds: 3  # 初回起動から探査開始までの猶予時間
+      periodSeconds: 5        # チェック間隔
+    readinessProbe:           # (3)準備探査
       httpGet:
-        path: /ready
+        path: /ready          # 準備探査のハンドラー
         port: 3000
       initialDelaySeconds: 15
       periodSeconds: 6
