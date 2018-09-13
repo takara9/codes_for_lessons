@@ -1,7 +1,9 @@
+## サンプルコード
+##   EXEC ヘルスチェック 
 apiVersion: v1
 kind: Pod
 metadata:
-  name: probe-test
+  name: probe-exec
 spec:
   containers:
   - name: alpine

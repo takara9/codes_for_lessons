@@ -1,7 +1,9 @@
+## サンプルコード
+##   TCP-SOCKET ヘルスチェック 
 apiVersion: v1
 kind: Pod
 metadata:
-  name: webserver
+  name: probe-tcp-port
 spec:
   containers:
   - name: nginx
@@ -9,14 +11,12 @@ spec:
     ports:
     - containerPort: 80
     readinessProbe:
-      httpGet:
-        path: /
+      tcpSocket:
         port: 80
       initialDelaySeconds: 10
       periodSeconds: 10
     livenessProbe:
-      httpGet:
-        path: /
+      tcpSocket:
         port: 80
       initialDelaySeconds: 5
       periodSeconds: 5
