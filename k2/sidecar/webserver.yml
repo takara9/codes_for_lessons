@@ -1,23 +1,23 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: www
+  name: webserver
 spec:
   containers:
   - name: nginx
-    image: nginx:1.12
+    image: nginx
     volumeMounts:
     - mountPath: /usr/share/nginx/html
-      name: contents-www
+      name: contents-vol
       readOnly: true
-  - name: contents-puller
+  - name: cloner
     image: maho/c-pull:0.1
     env:
     - name: CONTENTS_SOURCE_URL
       value: "https://github.com/takara9/web-contents"
     volumeMounts:
-    - mountPath: /data
-      name: contents-www
+    - mountPath: /html-pulled
+      name: contents-vol
   volumes:
-  - name: contents-www
+  - name: contents-vol
     emptyDir: {}
