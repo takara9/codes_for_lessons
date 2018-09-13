@@ -11,12 +11,12 @@ spec:
       name: contents-vol
       readOnly: true
   - name: cloner
-    image: maho/c-pull:0.1
+    image: maho/c-cloner:0.1
     env:
     - name: CONTENTS_SOURCE_URL
       value: "https://github.com/takara9/web-contents"
     volumeMounts:
-    - mountPath: /html-pulled
+    - mountPath: /data
       name: contents-vol
   volumes:
   - name: contents-vol
