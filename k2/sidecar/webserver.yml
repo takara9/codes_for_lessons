@@ -1,16 +1,19 @@
+## サイドカーポッドのサンプル
+#
 apiVersion: v1
 kind: Pod
 metadata:
   name: webserver
 spec:
-  containers:
+  containers:          ## メイン コンテナ
   - name: nginx
     image: nginx
     volumeMounts:
     - mountPath: /usr/share/nginx/html
       name: contents-vol
       readOnly: true
-  - name: cloner
+      
+  - name: cloner       ## サイドカー コンテナ
     image: maho/c-cloner:0.1
     env:
     - name: CONTENTS_SOURCE_URL
@@ -18,6 +21,7 @@ spec:
     volumeMounts:
     - mountPath: /data
       name: contents-vol
-  volumes:
+      
+  volumes:             ## 共有ボリューム
   - name: contents-vol
     emptyDir: {}
