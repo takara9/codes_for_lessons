@@ -1,0 +1,31 @@
+## デプロイメント 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deploy
+spec:
+  replicas: 3
+  selector:           # これは deployment - pod 対応用
+    matchLabels:
+      app: web
+  template:           # ここからポッド・テンプレート
+    metadata:
+      labels:
+        app: web      # ポッドのラベル
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+---
+## サービス
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:                 # typeを省略のため ClusterIP
+  selector:           # これは service - pod 連携用
+    app: web
+  ports:
+  - protocol: TCP
+    port: 80
+

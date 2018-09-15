@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: apl-on-baremetal
+spec:
+  type: ExternalName
+  externalName: 10.132.253.7
