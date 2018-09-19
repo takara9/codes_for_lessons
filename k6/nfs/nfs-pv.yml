@@ -1,0 +1,16 @@
+## トップレベルは「表7 PersistentVolume v1 core」を参照のこと
+apiVersion: v1
+kind: PersistentVolume
+metadata:       ## 表8を参照のこと
+  name: nfs-1
+  labels:
+    name: pv-nfs-1
+spec:           ## 表9を参照のこと
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteMany
+  nfs:          ## 表10を参照のこと
+    server: 172.16.20.10  ## VagrantのNFSサーバーのIPアドレス
+    path: /export         ## NFSサーバーが公開するパス
+

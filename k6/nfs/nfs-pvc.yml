@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-1
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: "" ## PVをラベルでマッチさせるため、Nullを設定
+  resources:
+    requests:
+      storage: "100Mi"
+  selector:            ## 対応するPVのラベルを設定する
+    matchLabels:
+      name: pv-nfs-1

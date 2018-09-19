@@ -1,0 +1,30 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dep-file
+  labels:
+    app: dep-file
+spec:
+  selector:
+    matchLabels:
+      app: dep-file
+  template:
+    metadata:
+      labels:
+        app: dep-file
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        volumeMounts:
+        - name: pvc-file
+          mountPath: /mnt
+        args:
+        - tail
+        - -f
+        - /dev/null
+      volumes:
+      - name: pvc-file
+        persistentVolumeClaim:
+          claimName: mypvc-file
+

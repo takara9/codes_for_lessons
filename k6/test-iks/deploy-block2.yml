@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dep-block2
+  labels:
+    app: dep-block2
+spec:
+  selector:
+    matchLabels:
+      app: dep-block2
+  template:
+    metadata:
+      labels:
+        app: dep-block2
+    spec:
+      containers:
+      - name: c1 # コンテナ１
+        image: ubuntu
+        volumeMounts:
+        - name: pvc-block
+          mountPath: /mnt
+        args:
+        - tail
+        - -f
+        - /dev/null
+      - name: c2 # コンテナ２
+        image: ubuntu
+        volumeMounts:
+        - name: pvc-block
+          mountPath: /mnt
+        args:
+        - tail
+        - -f
+        - /dev/null
+      volumes: # ポッドレベルのボリューム定義
+      - name: pvc-block
+        persistentVolumeClaim:
+          claimName: mypvc-block
+

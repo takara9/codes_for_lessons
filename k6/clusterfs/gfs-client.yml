@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gfs-client
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ubuntu
+  template:
+    metadata:
+      labels:
+        app: ubuntu
+    spec:
+      containers:
+      - name: ubuntu
+        image: ubuntu:16.04	
+        volumeMounts:
+        - name: gfs
+          mountPath: /mnt
+        #command: [”tail”, “-f”, “/dev/n
+        command: [ 'tail' ]
+        args:
+        - -f
+        - /dev/null
+      volumes:
+      - name: gfs
+        persistentVolumeClaim:
+          claimName: gvol-1

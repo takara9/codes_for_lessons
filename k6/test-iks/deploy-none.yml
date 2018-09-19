@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dep-no-pv
+  labels:
+    app: dep-no-pv
+spec:
+  selector:
+    matchLabels:
+      app: dep-no-pv
+  template:
+    metadata:
+      labels:
+        app: dep-no-pv
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        args:
+        - tail
+        - -f
+        - /dev/null
+
+

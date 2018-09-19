@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prime-number
+spec:
+  template:
+    spec:
+      containers:
+      - name: pn-generator
+        image: maho/pn_generator:0.1
+        env:
+        - name: A_START_NUM
+          value: "2"
+        - name: A_SIZE_NUM
+          value: "10**5"
+      restartPolicy: Never
+  backoffLimit: 4

@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dep-block
+  labels:
+    app: dep-block
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dep-block
+  template:
+    metadata:
+      labels:
+        app: dep-block
+    spec:
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        volumeMounts:
+        - name: pvc-block
+          mountPath: /mnt
+        args:
+        - tail
+        - -f
+        - /dev/null
+      volumes:
+      - name: pvc-block
+        persistentVolumeClaim:
+          claimName: mypvc-block
+

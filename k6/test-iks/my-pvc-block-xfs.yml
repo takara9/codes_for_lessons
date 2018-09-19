@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc-block-xfs
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-block-custom-xfs"
+  labels:
+    billingType: "hourly"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+      iops: "400"

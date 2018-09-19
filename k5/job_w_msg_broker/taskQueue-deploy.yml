@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: taskqueue
+spec:
+  selector:
+    matchLabels:
+      app: taskQueue
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: taskQueue   
+    spec:
+      containers:
+      - image: rabbitmq
+        name: rabbitmq
+        ports:
+        - containerPort: 5672
+        resources:
+          limits:
+            cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: taskqueue
+spec:
+  type: NodePort
+  ports:
+  - port: 5672
+    nodePort: 31672
+  selector:
+    app: taskQueue
+

@@ -1,0 +1,13 @@
+## 「表１PersistentVolumeClaim v1 core」を参照のこと
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:  ## 「表2 ObjectMeta v1 meta」を参照のこと
+  name: data1
+spec:      ## 「表3 PersistentVolumeClaimSpec v1 core」を参照のこと
+  accessModes:
+  - ReadWriteMany
+  storageClassName: standard
+  resources:
+    requests:
+      storage: 2Gi
+

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+  volumes:               ##「表5 Volume v1 core」を参照のこと
+  - name: pvc1
+    persistentVolumeClaim:
+      claimName: data1   ## <-- PVCの名前をセットする
+  containers:
+  - name: ubuntu
+    image: ubuntu:16.04
+    volumeMounts:        ## 「表6 VolumeMount v1 core」を参照のこと
+    - name: pvc1
+      mountPath: /mnt    ## <-- コンテナ上のマウントポイント
+    #command: [”tail”, “-f”, “/dev/nul# kubectl v1.11からエラー
+    command: [ 'tail' ]
+    args:
+    - -f
+    - /dev/null
