@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: ubuntu
-        image: ubuntu:16.04	
+        #image: ubuntu:16.04	
+        image: ubuntu	
         volumeMounts:
         - name: gfs
           mountPath: /mnt
