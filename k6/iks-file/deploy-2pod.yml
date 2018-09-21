@@ -1,30 +1,31 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: dep-file
+  name: dep2pod-file
   labels:
-    app: dep-file
+    app: dep2pod-file
 spec:
+  replicas: 2              ## ポッドが2つ起動
   selector:
     matchLabels:
-      app: dep-file
+      app: dep2pod-file
   template:
     metadata:
       labels:
-        app: dep-file
+        app: dep2pod-file
     spec:
       containers:
       - image: ubuntu
         name: ubuntu
         volumeMounts:
-        - name: pvc-file
+        - name: fs
           mountPath: /mnt
+        command: [ 'tail'] ## コンテナの終了防止
         args:
-        - tail
         - -f
         - /dev/null
       volumes:
-      - name: pvc-file
+      - name: fs
         persistentVolumeClaim:
-          claimName: mypvc-file
+          claimName: bronze-file
 

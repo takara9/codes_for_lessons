@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mypvc-file
+  name: bronze-file
   annotations:
     volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
   labels:
     billingType: "hourly"
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteMany  ## File(NFS)のため複数クライアントからマウント可
   resources:
     requests:
-      storage: 20Gi
+      storage: 20Gi  ## プロビジョニング要求容量(GB)

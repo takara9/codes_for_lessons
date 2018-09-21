@@ -1,31 +1,30 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: dep-block
+  name: dep1pod-blk
   labels:
-    app: dep-block
+    app: dep1pod-blk
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: dep-block
+      app: dep1pod-blk
   template:
     metadata:
       labels:
-        app: dep-block
+        app: dep1pod-blk
     spec:
-      containers:
+      containers:    
       - image: ubuntu
         name: ubuntu
         volumeMounts:
-        - name: pvc-block
+        - name: blk
           mountPath: /mnt
+        command: [ 'tail' ] ## コンテナの終了防止
         args:
-        - tail
         - -f
         - /dev/null
-      volumes:
-      - name: pvc-block
+      volumes:              ## ポッドのボリューム定義
+      - name: blk
         persistentVolumeClaim:
-          claimName: mypvc-block
+          claimName: bronze-blk
 

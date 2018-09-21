@@ -1,0 +1,39 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dep1pod2c-blk
+  labels:
+    app: dep1pod2c-blk
+spec:
+  selector:
+    matchLabels:
+      app: dep1pod2c-blk
+  template:
+    metadata:
+      labels:
+        app: dep1pod2c-blk
+    spec:
+      containers:    ## 二つのコンテナを内包するポッド
+      - name: c1            ## コンテナ#1
+        image: ubuntu
+        volumeMounts:
+        - name: blk
+          mountPath: /mnt
+        command: [ 'tail' ] ## コンテナの終了防止
+        args:
+        - -f
+        - /dev/null
+      - name: c2            ## コンテナ#2 
+        image: ubuntu
+        volumeMounts:
+        - name: blk
+          mountPath: /mnt
+        command: [ 'tail' ] ## コンテナの終了防止
+        args:
+        - -f
+        - /dev/null
+      volumes:       ## ポッドのボリューム定義
+      - name: blk
+        persistentVolumeClaim:
+          claimName: bronze-blk	
+

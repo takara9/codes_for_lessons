@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bronze-blk
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-block-bronze"
+  labels:
+    billingType: "hourly"
+spec:
+  accessModes:
+    - ReadWriteOnce   ## Block(iSCSI)のため多重アクセスが不可
+  resources:
+    requests:
+      storage: 20Gi   ## プロビジョニング要求容量(GB)
