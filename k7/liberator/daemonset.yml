@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: liberator
+  namespace: tkr-system    # システム用名前空間
+spec:
+  selector:
+    matchLabels:
+      name: liberator
+  template:
+    metadata:
+      labels:
+        name: liberator
+    spec:
+      serviceAccountName: high-availability # 権限と紐付くアカウント
+      containers:
+      - name: liberator
+        image: maho/liberator:0.4
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+
