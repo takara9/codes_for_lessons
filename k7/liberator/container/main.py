@@ -27,7 +27,7 @@ def node_monitor(v1):
                     else:
                         uk_node[n_name] = 0
                     print("unknown %s  count=%d" % (n_name,uk_node[n_name]))
-                    if uk_node[n_name] > 5:
+                    if uk_node[n_name] > 3:
                         del uk_node[n_name]
                         node_delete(v1,i.metadata.name)
 
@@ -43,5 +43,5 @@ if __name__ == '__main__':
     v1 = client.CoreV1Api()
     while True:
         node_monitor(v1)
-        sleep(3)
+        sleep(5)
 

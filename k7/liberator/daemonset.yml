@@ -15,7 +15,7 @@ spec:
       serviceAccountName: high-availability # 権限と紐付くアカウント
       containers:
       - name: liberator
-        image: maho/liberator:0.4
+        image: maho/liberator:0.1
         resources:
           limits:
             memory: 200Mi
