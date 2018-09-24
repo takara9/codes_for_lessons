@@ -1,10 +1,13 @@
+#
+# 音信不通ノードをクラスタからの解放する
+#
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
-from pprint import pprint
 from time import sleep
 
-uk_node = {}
+uk_node = {}  # KEYは状態が不明になったノード名、値は不明状態カウント数
 
+## ノード削除 関数
 def node_delete(v1,name):
     body = client.V1DeleteOptions()
     try:
@@ -13,35 +16,40 @@ def node_delete(v1,name):
     except ApiException as e:
         print("Exception when calling CoreV1Api->delete_node: %s\n" % e)
 
+## ノード監視 関数
 def node_monitor(v1):
     try:
         ret = v1.list_node(watch=False)
         for i in ret.items:
             n_name = i.metadata.name
-            #print("%s" % (i.metadata.name))
+            #print("%s" % (i.metadata.name)) #デバック用
             for j in i.status.conditions:
-                #print("\t%s\t%s" % (j.type, j.status))
+                #print("\t%s\t%s" % (j.type, j.status)) #デバック用
                 if (j.type == "Ready" and j.status != "True"):
                     if n_name in uk_node:
                         uk_node[n_name] += 1
                     else:
                         uk_node[n_name] = 0
                     print("unknown %s  count=%d" % (n_name,uk_node[n_name]))
+                    # カウンタが3回超えるとノードを削除
                     if uk_node[n_name] > 3:
                         del uk_node[n_name]
                         node_delete(v1,i.metadata.name)
-
+                # 1回でも状態が戻るとカウンタリセット
                 if (j.type == "Ready" and j.status == "True"):
                     if n_name in uk_node:
                         del uk_node[n_name]
     except ApiException as e:
         print("Exception when calling CoreV1Api->list_node: %s\n" % e)
 
-        
+## メイン        
 if __name__ == '__main__':
+    # 認証情報の取得
     config.load_incluster_config()
+    # インスタンス化
     v1 = client.CoreV1Api()
+    # 監視ループ 
     while True:
         node_monitor(v1)
-        sleep(5)
+        sleep(5) # 監視の間隔時間
 
