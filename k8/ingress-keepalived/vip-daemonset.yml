@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: kube-keepalived-vip
+  namespace: tkr-system
+spec:
+  template:
+    metadata:
+      labels:
+        name: kube-keepalived-vip
+    spec:
+      hostNetwork: true
+      serviceAccount: kube-keepalived-vip
+      containers:
+        - image: k8s.gcr.io/kube-keepalived-vip:0.11
+          name: kube-keepalived-vip
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /lib/modules
+              name: modules
+              readOnly: true
+            - mountPath: /dev
+              name: dev
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          # to use unicast
+          args:
+          - --services-configmap=tkr-system/vip-configmap
+          - --use-unicast=true
+          #- --vrrp-version=3
+      volumes:
+        - name: modules
+          hostPath:
+            path: /lib/modules
+        - name: dev
+          hostPath:
+            path: /dev

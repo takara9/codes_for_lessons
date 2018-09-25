@@ -1,0 +1,29 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: java-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: liberty
+    spec:
+      containers:
+        - image: openliberty/open-liberty
+          name:  open-liberty
+          ports:
+            - containerPort: 9080
+              name: httpport
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-svc
+spec:
+  selector:
+    app: liberty
+  ports:
+     -  port: 9080
+        targetPort: 9080
+

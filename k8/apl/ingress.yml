@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  annotations:
+    kubernetes.io/ingress.class: 'nginx'
+
+spec:
+  rules:
+  - host: abc.sample.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: hello-world-svc
+          servicePort: 8080
