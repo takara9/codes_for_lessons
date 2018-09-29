@@ -1,0 +1,15 @@
+##
+# リソース設定 
+#
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota        # Quotaの名前
+  namespace: prod    # 対象の名前空間
+spec:
+  hard:
+    requests.cpu: "1"     # CPU要求の合計量  1コア
+    requests.memory: 1Gi  # メモリ要求の合計 1ギガバイト
+    limits.cpu: "1"       # CPU最大の合計量  1コア
+    limits.memory: 1Gi    # メモリ要求の合計 1ギガバイト
+

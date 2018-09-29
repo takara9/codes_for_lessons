@@ -1,0 +1,63 @@
+##
+# シスオペ サービスアカウント(SA)を作成
+#
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sysop
+  namespace: prod
+---
+##
+# シスオペSAを「クラスタロール」を対応づけ
+#
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sysop-crb
+  namespace: prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  namespace: prod
+  name: sysop
+
+---
+##
+# シスオペ ロールの作成
+#   「クラスタロール」に含まれるので任意
+#
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: sysop
+  namespace: prod
+rules:
+# ポッドのアクセス権 コアAPIを指定 apiVersion: v1
+- apiGroups: [""]
+  resources: ["pods","pods/log","services"]
+  verbs: ["get", "watch", "list"]
+# deploymentのアクセス権  extention/applsを指定
+- apiGroups: ["extensions", "apps"]  
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]
+---
+##
+# シスオペSAと「ロールsysop」を対応づけ
+#   (クラスタロールに含まれるので任意)
+#
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sysop-rb
+  namespace: prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sysop
+subjects:
+- kind: ServiceAccount
+  namespace: prod
+  name: sysop

@@ -1,0 +1,33 @@
+#
+# ネットワーク・ポリシーの設定
+#
+
+##
+# 同じネームスペース以外からのアクセスを禁止
+#
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: deny-from-other-namespaces
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:        #  ← 全てのポッドが対象
+  ingress:
+  - from:
+    - podSelector: {}
+---
+## 
+# app: expose ラベルが付いたコンテナは公開する
+#
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: expose-external
+  namespace: prod
+spec:
+  podSelector:
+    matchLabels:
+      app: expose
+  ingress:
+  - from: []

@@ -1,0 +1,37 @@
+#
+# 内部用マイクロサービス 模擬
+#
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rest-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: rest-server
+  template:
+    metadata:
+      labels:
+        run: rest-server
+    spec:
+      containers:
+      - image: "maho/webapl3"
+        name: rest-server-c
+        ports:
+          - containerPort: 80
+---
+#
+# 内部マイクロサービス用
+#
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-server
+spec:
+  type: NodePort  
+  selector:
+    run: rest-server
+  ports:
+  - port: 80
+    protocol: TCP

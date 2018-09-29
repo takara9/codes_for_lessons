@@ -1,0 +1,44 @@
+
+$ docker build --tag maho/webapl3 .
+Sending build context to Docker daemon   7.68kB
+Step 1/3 : FROM php:7.0-apache
+ ---> e18e9bf71cab
+Step 2/3 : COPY src/ /var/www/html/
+ ---> 8fbcfab11d37
+Step 3/3 : RUN chmod a+rx /var/www/html/*.php
+ ---> Running in ea55bff0dee5
+Removing intermediate container ea55bff0dee5
+ ---> 3cd0a957f5db
+Successfully built 3cd0a957f5db
+Successfully tagged maho/webapl3:latest
+
+
+
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username (maho): 
+Password: 
+Login Succeeded
+
+
+$ docker push maho/webapl3
+The push refers to repository [docker.io/maho/webapl3]
+db75af880eed: Pushed 
+fe42c5cdf34c: Pushed 
+5a1b09e279b7: Mounted from maho/session-test 
+e6d5f2199a70: Mounted from maho/session-test 
+69b0def2a2e1: Mounted from maho/session-test 
+35346990f29c: Mounted from maho/session-test 
+1aaed32fb1cb: Mounted from maho/session-test 
+626b22e159e9: Mounted from maho/session-test 
+890ac556231c: Mounted from maho/session-test 
+2547deb58858: Mounted from maho/session-test 
+2820f3833225: Mounted from maho/session-test 
+bd177c44f7b5: Mounted from maho/session-test 
+edb58ae69dc5: Mounted from maho/session-test 
+e60b418ef018: Mounted from maho/session-test 
+38a21f17d1a7: Mounted from maho/session-test 
+d626a8ad97a1: Mounted from maho/session-test 
+latest: digest: sha256:9296f3ba30d609b1ceac7a583659e301dee38a76b6e54c7f4777b6fe81bf386c size: 3657
+
+

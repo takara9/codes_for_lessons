@@ -1,0 +1,32 @@
+#
+# 外部公開用 模擬
+#
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: web-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        web: web-server
+        app: expose	
+    spec:
+      containers:
+        - image: "maho/webapl3"
+          name: web-server-c
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-server
+spec:
+  type: NodePort
+  ports:
+  -  port: 80
+     protocol: TCP
+  selector:
+    web: web-server

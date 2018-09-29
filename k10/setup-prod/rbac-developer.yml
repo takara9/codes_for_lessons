@@ -1,0 +1,64 @@
+################################################
+##
+# 開発者用のサービスアカウント(SA)を作成
+#
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: developer
+  namespace: prod
+---
+################################################
+##
+# 開発者SAを「クラスタロール」を対応づけ
+#
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-crb
+  namespace: prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view            # 本番では参照だけに制限
+subjects:
+- kind: ServiceAccount
+  namespace: prod
+  name: developer
+---
+##
+# 開発者 ロールの作成
+#   クラスタロール に含まれるので任意
+#
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: prod
+rules:
+# podsアクセス権 コアAPIを指定 apiVersion: v1
+- apiGroups: [""]
+  resources: ["pods","pods/log","services"]
+  verbs: ["get", "watch", "list"]
+# deploymentアクセス権  extention/applsを指定
+- apiGroups: ["extensions", "apps"]  
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]
+---
+##
+# 開発者SAと「ロールdeveloper」を対応づけ
+#   (クラスタロールに含まれるので任意)
+#
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-rb
+  namespace: prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: developer
+subjects:
+- kind: ServiceAccount
+  namespace: prod
+  name: developer

@@ -1,0 +1,14 @@
+##
+# テスト空間のリソース設定
+#
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: quota        # Quotaの名前
+  namespace: test    # 対象の名前空間 テスト環境
+spec:
+  hard:
+    requests.cpu: "0.5"      # CPU要求の合計量  1コア
+    requests.memory: 500Mi   # メモリ要求の合計 500メガバイト
+    limits.cpu: "0.5"        # CPU最大の合計量  1コア
+    limits.memory: 500Mi     # メモリ要求の合計 500メガバイト

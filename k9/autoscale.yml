@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-php
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: web-php
+  template:
+    metadata:
+      labels:
+        run: web-php
+    spec:
+      containers:
+      - image: maho/web-php:0.2
+        name: web-php
+        resources:
+          requests:
+            cpu: 200m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-php
+spec:
+  type: NodePort
+  selector:
+    run: web-php
+  ports:
+  - port: 80
+    protocol: TCP
+    nodePort: 31446

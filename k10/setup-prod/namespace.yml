@@ -1,0 +1,7 @@
+##
+# 本番用の名前空間の作成
+#
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prod         # production の先頭四文字を利用
