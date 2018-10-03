@@ -60,5 +60,8 @@ roleRef:
   name: developer
 subjects:
 - kind: ServiceAccount
-  namespace: prod
+  namespace: prod      ## 本番空間のdeveloperに参照権
+  name: developer
+- kind: ServiceAccount
+  namespace: test      ## テスト空間のdeveloperに参照権
   name: developer
