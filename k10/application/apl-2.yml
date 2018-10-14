@@ -16,7 +16,7 @@ spec:
         apl: web-apl2-rest
     spec:
       containers:
-      - image: "maho/webapl3"
+      - image: maho/webapl3
         name: rest-server-c
         ports:
           - containerPort: 80
