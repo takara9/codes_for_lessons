@@ -1,0 +1,15 @@
+## 
+## HTTPS 模擬アプリケーション サービス
+##
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-apl3
+spec:
+  selector:
+    apl: web-apl3      ## ポッドテンプレートのラベルと一致が必須
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+  type: LoadBalancer   ## 外部向けロードバランサー

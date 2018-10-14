@@ -4,16 +4,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: rest-server
+  name: web-apl2-rest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: rest-server
+      apl: web-apl2-rest
   template:
     metadata:
       labels:
-        run: rest-server
+        apl: web-apl2-rest
     spec:
       containers:
       - image: "maho/webapl3"
@@ -27,11 +27,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rest-server
+  name: web-apl2-rest
 spec:
-  type: NodePort  
+  ##type: NodePort 
+  type: ClusterIP
   selector:
-    run: rest-server
+    apl: web-apl2-rest
   ports:
   - port: 80
     protocol: TCP

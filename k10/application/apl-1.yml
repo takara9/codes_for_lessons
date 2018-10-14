@@ -4,17 +4,17 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: web-server
+  name: web-apl1
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        web: web-server
+        web: web-apl1
         app: expose	
     spec:
       containers:
-        - image: "maho/webapl3"
+        - image: maho/webapl3   # 
           name: web-server-c
           ports:
             - containerPort: 80
@@ -22,11 +22,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-server
+  name: web-apl1
 spec:
   type: NodePort
   ports:
   -  port: 80
      protocol: TCP
   selector:
-    web: web-server
+    web: web-apl1

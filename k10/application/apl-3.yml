@@ -1,0 +1,37 @@
+## 
+## HTTPS 模擬アプリケーション
+##
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-apl3
+spec:
+  replicas: 3
+  selector:         # これは deployment - pod 対応用
+    matchLabels:
+      apl: web-apl3 # ポッドと一致するべきラベル
+  template:         ### ここからポッド・テンプレート
+    metadata:
+      labels:
+        apl: web-apl3   # ポッドのラベル
+        app: expose     # アクセスポリシーで公開を指定
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest      # Nginx公式コンテナ
+        ports:                     # 公開用ポート
+        - protocol: TCP            # TCP
+          containerPort: 443       # HTTPS
+        volumeMounts:                   ## ボリュームのマウント
+        - name: nginx-conf              # コンフィグマップのVol名
+          mountPath: /etc/nginx/conf.d  # マウントパス
+        - name: tls-cert                # シークレットのVol名
+          mountPath: /etc/cert          # マウントパス
+      volumes:               ## ボリューム定義
+      - name: nginx-conf     # Vol名
+        configMap:           # コンフィグマップを指定
+          name: nginx-conf   # 参照先のコンフィグマップ名
+      - name: tls-cert       # Vol名
+        secret:              # シークレットを指定
+          secretName: cert   # 参照先のシークレット名
+
