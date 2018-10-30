@@ -1,0 +1,12 @@
+## サービス
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:                 # typeを省略のため ClusterIP
+  selector:           # これは service - pod 連携用
+    app: web
+  ports:
+  - protocol: TCP
+    port: 80
+
