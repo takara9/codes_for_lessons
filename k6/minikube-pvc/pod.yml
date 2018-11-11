@@ -13,8 +13,4 @@ spec:
     volumeMounts:        ## 「表6 VolumeMount v1 core」を参照のこと
     - name: pvc1
       mountPath: /mnt    ## <-- コンテナ上のマウントポイント
-    #command: [”tail”, “-f”, “/del"] v/nul# kubectl v1.1エラー
-    command: [ 'tail' ]
-    args:
-    - -f
-    - /dev/null
+    command: ["/usr/bin/tail","-f","/dev/null"]      

@@ -20,12 +20,8 @@ spec:
         volumeMounts:
         - name: fs
           mountPath: /mnt
-        command: [ 'tail'] ## コンテナの終了防止
-        args:
-        - -f
-        - /dev/null
+        command: ["/usr/bin/tail","-f","/dev/null"]
       volumes:
       - name: fs
         persistentVolumeClaim:
           claimName: bronze-file
-

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: bronze-blk
+spec:
+  accessModes:
+    - ReadWriteOnce   ## Block(iSCSI)のため多重接続は不可
+  resources:
+    requests:
+      storage: 20Gi   ## プロビジョニング要求容量(GB)

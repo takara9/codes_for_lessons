@@ -14,16 +14,11 @@ spec:
     spec:
       containers:
       - name: ubuntu
-        #image: ubuntu:16.04	
         image: ubuntu	
         volumeMounts:
         - name: gfs
           mountPath: /mnt
-        #command: [”tail”, “-f”, “/dev/n
-        command: [ 'tail' ]
-        args:
-        - -f
-        - /dev/null
+        command: ["/usr/bin/tail","-f","/dev/null"]
       volumes:
       - name: gfs
         persistentVolumeClaim:

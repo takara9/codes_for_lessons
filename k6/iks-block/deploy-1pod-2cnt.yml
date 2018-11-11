@@ -19,19 +19,13 @@ spec:
         volumeMounts:
         - name: blk
           mountPath: /mnt
-        command: [ 'tail' ] ## コンテナの終了防止
-        args:
-        - -f
-        - /dev/null
+        command: ["/usr/bin/tail","-f","/dev/null"]
       - name: c2            ## コンテナ#2 
         image: ubuntu
         volumeMounts:
         - name: blk
           mountPath: /mnt
-        command: [ 'tail' ] ## コンテナの終了防止
-        args:
-        - -f
-        - /dev/null
+        command: ["/usr/bin/tail","-f","/dev/null"]
       volumes:       ## ポッドのボリューム定義
       - name: blk
         persistentVolumeClaim:

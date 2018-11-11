@@ -18,11 +18,7 @@ spec:
         volumeMounts:
         - name: nfs
           mountPath: /mnt
-        #command: [”tail”, “-f”, “/dev/null”]
-        args:
-        - tail
-        - -f
-        - /dev/null
+        command: ["/usr/bin/tail","-f","/dev/null"]
       volumes:
       - name: nfs
         persistentVolumeClaim:
