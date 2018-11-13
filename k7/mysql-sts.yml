@@ -1,57 +1,61 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-sts           # この名前がk8s内のDNS名として登録されます。
+  name: mysql        ## この名前がk8s内のDNS名として登録されます。
   labels:
-    app: mysql
+    app: mysql-sts
 spec:
   ports:
   - port: 3306
     name: mysql
-  clusterIP: None                   # ヘッドレスとして、サービスを生成
+  clusterIP: None    ## 特徴① ヘッドレスサービスを設定
   selector:
-    app: mysql                      # ラベルmysqlのポッドと連携
+    app: mysql-sts   ## 後続のステートフルセットと関連づけるラベル
 ---
 ## MySQL ステートフルセット
 #
-apiVersion: apps/v1
+apiVersion: apps/v1         ## 表1 ステートフルセット参照
 kind: StatefulSet
 metadata:
   name: mysql
-spec:
-  serviceName: "mysql"
-  replicas: 1                       # ポッド起動数
+spec:                       ## 表2 ステートフルセットの仕様
+  serviceName: mysql        ## 特徴② 連携するサービス名を設定
+  replicas: 1               ## ポッド起動数
   selector:
     matchLabels:
-      app: mysql
-  template:                         # ポッドテンプレート
+      app: mysql-sts
+  template:                 ## 表3 ポッドテンプレートの仕様
     metadata:
       labels:
-        app: mysql
+        app: mysql-sts
     spec:
-      containers:                   # MySQLコンテナ
+      containers:           
       - name: mysql
-        image: mysql:5.7
+        image: mysql:5.7    ## Docker Hub MySQLリポジトリを指定
         env:
         - name: MYSQL_ROOT_PASSWORD
           value: qwerty
         ports:
         - containerPort: 3306
           name: mysql
-        volumeMounts:               # MySQLのデータ領域
+        volumeMounts:       ## 特徴③コンテナ上のマウントポイント設定
         - name: pvc
           mountPath: /var/lib/mysql
-        livenessProbe:              # MySQLの稼働チェック
+          subPath: data     ## 初期化時に空ディレクトリが必要なため
+        livenessProbe:      ## MySQL稼働チェック
           exec:
             command: ["mysqladmin","-p$MYSQL_ROOT_PASSWORD","ping"]
           initialDelaySeconds: 60
           timeoutSeconds: 10
-  volumeClaimTemplates:             # ボリューム要求
+  volumeClaimTemplates:     ## 特徴④ボリューム要求テンプレート
   - metadata:
       name: pvc
-    spec:
+    spec:                   ## 表4 永続ボリューム要求の雛形
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: gluster-heketi   # 環境やクラウドにより異なる
+      ## 環境に合わせて選択して、storageの値を編集
+      storageClassName: ibmc-file-bronze   # 容量 20Gi IKS
+      #storageClassName: gluster-heketi     # 容量 12Gi GlusterFS
+      #storageClassName: standard            # 容量 2Gi  Minikube/GKE
       resources:
         requests:
-          storage: 12Gi
+          storage: 2Gi

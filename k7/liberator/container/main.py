@@ -1,11 +1,17 @@
+# coding: UTF-8
 #
-# 音信不通ノードをクラスタからの解放する
+# 状態不明ノードをクラスタから削除する
 #
+import signal, os, sys
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 from time import sleep
 
-uk_node = {}  # KEYは状態が不明になったノード名、値は不明状態カウント数
+uk_node = {}  # KEYは状態不明になったノード名、値は不明状態カウント数
+
+## 停止要求シグナル処理
+def handler(signum, frame):
+    sys.exit(0)
 
 ## ノード削除 関数
 def node_delete(v1,name):
@@ -44,10 +50,9 @@ def node_monitor(v1):
 
 ## メイン        
 if __name__ == '__main__':
-    # 認証情報の取得
-    config.load_incluster_config()
-    # インスタンス化
-    v1 = client.CoreV1Api()
+    signal.signal(signal.SIGTERM, handler) # シグナル処理
+    config.load_incluster_config()         # 認証情報の取得
+    v1 = client.CoreV1Api()                # インスタンス化
     # 監視ループ 
     while True:
         node_monitor(v1)
