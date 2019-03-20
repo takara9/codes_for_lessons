@@ -1,7 +1,7 @@
 #
 # 内部用マイクロサービス 模擬
 #
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-apl2-rest

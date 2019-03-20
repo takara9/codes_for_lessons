@@ -1,7 +1,7 @@
 #
 # 外部公開用 模擬
 #
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-apl1
