@@ -2,14 +2,16 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
- name: gvol-1
+  name: gvol-1
 spec:
- storageClassName: gluster-heketi
- accessModes:
-  - ReadWriteMany
- resources:
-   requests:
-     storage: 12Gi
+  storageClassName: gluster-heketi
+  #storageClassName: ibmc-file-bronze   # 容量 20Gi IKS 
+  accessModes:
+   - ReadWriteMany
+  resources:
+    requests:
+      storage: 12Gi
+      #storage: 20Gi   # for IKS
 ---
 # MySQLサーバーデプロイメント
 apiVersion: apps/v1
