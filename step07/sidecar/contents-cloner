@@ -2,7 +2,7 @@
 # 最新WebコンテンツをGitHubからコンテナへ取込む
 
 # コンテンツ元の環境変数が無ければエラー終了
-if [ -z $CONTENTS_SOURCE_URL]; then
+if [ -z $CONTENTS_SOURCE_URL ]; then
    exit 1
 fi
 
