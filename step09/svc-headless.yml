@@ -1,0 +1,17 @@
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: server1
+subsets:
+  - addresses:
+    - ip: 192.168.1.16
+---      
+apiVersion: v1
+kind: Service
+metadata:
+  name: server1
+spec:
+  clusterIP: None
+
+
+
