@@ -4,7 +4,7 @@ metadata:       ##「表2 ObjectMeta v1 meta」
   name: data1
 spec:           ##「表3 PersistentVolumeClaimSpec v1 core」
   accessModes:
-  - ReadWriteMany
+  - ReadWriteOnce
   storageClassName: standard
   resources:
     requests:
