@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep3pod-blk
+  labels:
+    app: dep3pod-blk
+spec:
+  replicas: 3              ## ポッドが３つ起動
+  selector:
+    matchLabels:
+      app: dep3pod-blk
+  template:
+    metadata:
+      labels:
+        app: dep3pod-blk
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: 10.193.10.44
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        volumeMounts:
+        - name: blk
+          mountPath: /mnt
+        command: ["/usr/bin/tail","-f","/dev/null"]
+      volumes:              ## ポッドのボリューム定義 
+      - name: blk
+        persistentVolumeClaim:
+          claimName: bronze-blk
+          readOnly: true
