@@ -13,10 +13,10 @@ RMO(ReadWriteOnce)「単一ノードの読み出しアクセスと書き込み�
 作成しました。この中で、nodeSelector を利用して一つのノードに
 集中してスケジュールすることができます。
 
-~~~deploy-3pod-single-node.yml抜粋
+~~~file:deploy-3pod-single-node.yml抜粋
     spec:
       nodeSelector:
-        kubernetes.io/hostname: 10.193.10.44  ## <<-- ラベルを変更
+        kubernetes.io/hostname: 10.193.10.44  ## <<-- 自己の環境に合わせてラベルを変更
       containers:
       - image: ubuntu
 ~~~
@@ -26,7 +26,7 @@ RMO(ReadWriteOnce)「単一ノードの読み出しアクセスと書き込み�
 ノード名にプライベートIPアドレスが使われていて、2ノードあることがわかります。
 上記のnodeSelector の設定で、ノード名 10.193.10.44 にスケジュールされます。
 
-~~~実行例
+~~~file:実行例
 bash-3.2$ kubectl get no --show-labels
 NAME           STATUS   ROLES    AGE    VERSION       LABELS
 10.193.10.44   Ready    <none>   110d   v1.12.6+IKS   arch=amd64,beta.kubernetes.io/arch=amd64,beta.kubernetes.io/instance-type=u2c.2x4.encrypted,beta.kubernetes.io/os=linux,failure-domain.beta.kubernetes.io/region=jp-tok,failure-domain.beta.kubernetes.io/zone=tok05,ibm-cloud.kubernetes.io/encrypted-docker-data=true,ibm-cloud.kubernetes.io/ha-worker=true,ibm-cloud.kubernetes.io/iaas-provider=softlayer,ibm-cloud.kubernetes.io/machine-type=u2c.2x4.encrypted,ibm-cloud.kubernetes.io/os=UBUNTU_16_64,ibm-cloud.kubernetes.io/sgx-enabled=false,ibm-cloud.kubernetes.io/worker-pool-id=d5361e9e1b0e40e099ecd7fe02a71d64-185b835,ibm-cloud.kubernetes.io/worker-version=1.12.6_1547,kubernetes.io/hostname=10.193.10.44,privateVLAN=2445839,publicVLAN=2445837
@@ -36,7 +36,7 @@ NAME           STATUS   ROLES    AGE    VERSION       LABELS
 
 nodeSelectorの条件を編集して、デプロイします。
 
-~~~実行例：一つのノードの3ポッドをデプロイ
+~~~file:実行例：一つのノードの3ポッドをデプロイ
 $ kubectl apply -f deploy-3pod-single-node.yml
 deployment.apps/dep3pod-blk created
 ~~~
@@ -44,7 +44,7 @@ deployment.apps/dep3pod-blk created
 
 実行結果の確認です。一つのノードの場合でも、1つのポッドだけしか実行できていません。
 
-~~~実行例：ポッドの実行状態の確認
+~~~file:実行例：ポッドの実行状態の確認
 $ kubectl get po --selector='app=dep3pod-blk' -o wide
 NAME                         READY STATUS            AGE   IP            NODE        
 dep3pod-blk-6d7f5b8c49-6d7bw 1/1   Running           3m10s 172.30.55.146 10.193.10.44
@@ -56,7 +56,7 @@ dep3pod-blk-6d7f5b8c49-lnzht 0/1   ContainerCreating 3m10s <none>        10.193.
 原因を確認します。
 
 
-~~~実行例：ポッドのエラー表示
+~~~file:実行例：ポッドのエラー表示
 $ kubectl describe po dep3pod-blk-6d7f5b8c49-8hhrk
 <中略>
 Events:
