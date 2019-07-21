@@ -10,7 +10,7 @@ spec:
         app: liberty
     spec:
       containers:
-        - image: openliberty/open-liberty
+        - image: openliberty/open-liberty:javaee8-ubi-min-amd64
           name:  open-liberty
           ports:
             - containerPort: 9080
