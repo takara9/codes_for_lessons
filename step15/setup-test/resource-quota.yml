@@ -8,7 +8,7 @@ metadata:
   namespace: test    # 対象の名前空間 テスト環境
 spec:
   hard:
-    requests.cpu: "0.5"      # CPU要求の合計量  1コア
+    requests.cpu: "0.5"      # CPU要求の合計量  0.5コア(500ミリ秒)
     requests.memory: 500Mi   # メモリ要求の合計 500メガバイト
-    limits.cpu: "0.5"        # CPU最大の合計量  1コア
+    limits.cpu: "0.5"        # CPU最大の合計量  0.5コア(500ミリ秒)
     limits.memory: 500Mi     # メモリ要求の合計 500メガバイト
