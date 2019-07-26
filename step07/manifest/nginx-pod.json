@@ -7,7 +7,7 @@
     "spec": {
         "containers": [
             {
-                "image": "nginx:1.12",
+                "image": "nginx:latest",
                 "name": "nginx"
             }
         ]
