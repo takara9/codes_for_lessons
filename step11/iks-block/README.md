@@ -1,10 +1,69 @@
 ## Step13 ストレージ 本文に対する補足
 
-実行例13 のK8sクラスタのワーカーノード数は２です。そのため、ContainerCreating で待機状態なったポッドが、同一ノードのポッドか、
-それとも、異なるノードにスケジュールされたものか解りません。
+## HelmのセットアップとIBM Cloud Block Storage プラグインのインストール
 
-アクセスモード RMO(ReadWriteOnce)は「単一ノードの読み出しアクセスと書き込みアクセス」を意味しており、
-同一ノードのスケジュールされたポッドはストレージを利用できますが、異なるノードにスケジュールされたポッドはアクセスできないことになるはずです。
+IKSマニュアルでは解りにくいとの事で「Helm」のセットアップと「IBM Cloud Block Storage プラグイン」を実行した例を書いておきます。
+
+
+1. K8sクラスタにTillerをインストール
+
+~~~
+$ kubectl apply -f https://raw.githubusercontent.com/IBM-Cloud/kube-samples/master/rbac/serviceaccount-tiller.yaml
+~~~
+
+2. Helmの初期化
+
+~~~
+$ helm init --service-account tiller --upgrade
+~~~
+
+3. チャートの追加
+
+~~~
+$ helm repo add iks-charts https://icr.io/helm/iks-charts
+~~~
+
+4. ブロックストレージのプラグイン インストール
+
+~~~
+$ helm install --name blkstg iks-charts/ibmcloud-block-storage-plugin
+~~~
+
+
+5. ストレージクラスの確認
+
+ブロック・ストレージ・クラスの追加に成功すれば、次のようにリストされます。
+
+~~~
+$ kubectl get sc
+NAME                         PROVISIONER         AGE
+default                      ibm.io/ibmc-file    2d19h
+ibmc-block-bronze            ibm.io/ibmc-block   9m26s
+ibmc-block-custom            ibm.io/ibmc-block   9m26s
+ibmc-block-gold              ibm.io/ibmc-block   9m26s
+ibmc-block-retain-bronze     ibm.io/ibmc-block   9m26s
+ibmc-block-retain-custom     ibm.io/ibmc-block   9m26s
+ibmc-block-retain-gold       ibm.io/ibmc-block   9m26s
+ibmc-block-retain-silver     ibm.io/ibmc-block   9m26s
+ibmc-block-silver            ibm.io/ibmc-block   9m26s
+ibmc-file-bronze (default)   ibm.io/ibmc-file    2d19h
+ibmc-file-custom             ibm.io/ibmc-file    2d19h
+ibmc-file-gold               ibm.io/ibmc-file    2d19h
+ibmc-file-retain-bronze      ibm.io/ibmc-file    2d19h
+ibmc-file-retain-custom      ibm.io/ibmc-file    2d19h
+ibmc-file-retain-gold        ibm.io/ibmc-file    2d19h
+ibmc-file-retain-silver      ibm.io/ibmc-file    2d19h
+ibmc-file-silver             ibm.io/ibmc-file    2d19h
+~~~
+
+
+
+
+## IKS ブロックストレージアクセスは、単一ノード or 単一ポッド か？
+
+実行例13 のK8sクラスタのワーカーノード数は２です。そのため、ContainerCreating で待機状態なったポッドが、同一ノードのポッドか、それとも、異なるノードにスケジュールされたものか解りません。
+
+アクセスモード RMO(ReadWriteOnce)は「単一ノードの読み出しアクセスと書き込みアクセス」を意味しており、同一ノードのスケジュールされたポッドはストレージを利用できますが、異なるノードにスケジュールされたポッドはアクセスできないことになるはずです。
 
 その事を確かめるためのマニフェスト deploy-3pod-single-node.yml を作成しました。この中で、nodeSelector を利用して一つのノードに集中してスケジュールします。
 
