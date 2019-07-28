@@ -53,9 +53,9 @@ spec:                       ## 表2 ステートフルセットの仕様
     spec:                   ## 表4 永続ボリューム要求の雛形
       accessModes: [ "ReadWriteOnce" ]
       ## 環境に合わせて選択して、storageの値を編集
-      storageClassName: ibmc-file-bronze   # 容量 20Gi IKS
+      #storageClassName: ibmc-file-bronze   # 容量 20Gi IKS
       #storageClassName: gluster-heketi     # 容量 12Gi GlusterFS
-      #storageClassName: standard            # 容量 2Gi  Minikube/GKE
+      storageClassName: standard            # 容量 2Gi  Minikube/GKE
       resources:
         requests:
           storage: 2Gi
