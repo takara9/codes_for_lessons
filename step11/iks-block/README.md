@@ -58,9 +58,7 @@ ibmc-file-silver             ibm.io/ibmc-file    2d19h
 
 
 
-
-
-## IKS ブロックストレージアクセスは、単一ノード or 単一ポッド か？
+## IKS ブロックストレージへのアクセスは、単一ノード or 単一ポッド か？
 
 
 実行例13 のK8sクラスタのワーカーノード数は２です。そのため、ContainerCreating で待機状態なったポッドが、同一ノードのポッドか、それとも、異なるノードにスケジュールされたものか解りません。
@@ -123,6 +121,25 @@ Events:
 エラーメッセージから、すでに他のポッドがマウントしているためにマウントできないことが読み取れます。
 
 "RWO check has failed. <省略>-8a0381bb8d07 is already mounted on mountpath <省略>"
+
+
+
+## GKE ブロックストレージへのアクセス RWO は単一ノード単位
+
+上記のマニフェストを少し変えて、GKEでも試してみました。
+GKEでは、一つのノード上で、同じブロックストレージをマウントするポッドを複数立ち上げて動作することが確認できました。
+
+~~~
+$ kubectl apply -f deploy-3pod-single-node.yml
+deployment.apps/dep3pod-blk created
+
+$ kubectl get po -o wide
+NAME                           READY STATUS  AGE IP        NODE                                
+dep3pod-blk-7c579947df-hrcc7   1/1   Running 84m 10.8.0.17 gke-gke-1-default-pool-4b8e4604-t0lq
+dep3pod-blk-7c579947df-p72n6   1/1   Running 84m 10.8.0.18 gke-gke-1-default-pool-4b8e4604-t0lq
+dep3pod-blk-7c579947df-vvb47   1/1   Running 84m 10.8.0.16 gke-gke-1-default-pool-4b8e4604-t0lq
+~~~
+
 
 
 

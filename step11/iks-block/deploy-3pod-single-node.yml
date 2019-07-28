@@ -15,7 +15,8 @@ spec:
         app: dep3pod-blk
     spec:
       nodeSelector:
-        kubernetes.io/hostname: 10.193.10.44
+        # kubernetes.io/hostname: 10.193.10.44
+        kubernetes.io/hostname: gke-gke-1-default-pool-4b8e4604-t0lq
       containers:
       - image: ubuntu
         name: ubuntu
@@ -27,4 +28,4 @@ spec:
       - name: blk
         persistentVolumeClaim:
           claimName: bronze-blk
-          readOnly: true
+          # readOnly: true
