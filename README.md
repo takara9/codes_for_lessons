@@ -2,8 +2,9 @@
 
 このリポジトリは、[15Stepで習得 Dockerから入るKubernetes コンテナ開発からK8s本番運用まで (StepUp!選書)](https://amzn.to/2mgCRya)に掲載した演習用のサンプルコードです。
 
+## 本書の章立てとの対応づけ
 
-ディレクトリのStep番号で章節と対応づけています。内容によってコマンドだけで完結するのでサンプルコードのないStepもあります。
+ディレクトリのStep番号で対応づけています。内容によってコマンドだけで完結するのでサンプルコードのないStepもあります。
 
 ### 2章 コンテナ開発を習得する5ステップ
 * Step01 コンテナ最初の一歩 (サンプルコードなし）
@@ -25,8 +26,9 @@
 * Step15 クラスタの仮想化
 
 
+## 実行環境
 
-以下の実行環境は、VirtualBox + Vagrant で自動構築します。
+IKSやGKEといったパブリッククラウドの環境でも動作します。また、読者自身のパソコン環境にVirtualBox と Vagrant で仮想環境をセットアップすれば、自分だけの学習環境も構築できます。
 
 * [https://github.com/takara9/vagrant-minikube](Minikube)
 * [https://github.com/takara9/vagrant-kubernetes](オリジナルのKubernetesクラスタ)
