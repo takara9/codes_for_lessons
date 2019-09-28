@@ -30,13 +30,13 @@
 
 IKSやGKEといったパブリッククラウドの環境でも動作します。また、読者自身のパソコン環境にVirtualBox と Vagrant で仮想環境をセットアップすれば、自分だけの学習環境も構築できます。
 
-* [https://github.com/takara9/vagrant-minikube](Minikube)
-* [https://github.com/takara9/vagrant-kubernetes](オリジナルのKubernetesクラスタ)
+* [Minikube](https://github.com/takara9/vagrant-minikube)
+* [オリジナルのKubernetesクラスタ](https://github.com/takara9/vagrant-kubernete)
 
 Kubernetes環境と組み合わせて利用できる永続ストレージです。
 
-* [https://github.com/takara9/vagrant-nfs](NFSサーバー 一般的NFSサーバーをコンテナからマウントする環境)
-* [https://github.com/takara9/vagrant-glusterfs](GlusterFSサーバー + Heketi の動的プロビジョニング環境)
+* [NFSサーバー 一般的NFSサーバーをコンテナからマウントする環境](https://github.com/takara9/vagrant-nfs)
+* [GlusterFSサーバー + Heketi の動的プロビジョニング環境](https://github.com/takara9/vagrant-glusterfs)
 
 
 どうぞ、Docker や Kubernetes をお楽しみください。
