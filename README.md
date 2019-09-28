@@ -31,7 +31,7 @@
 IKSやGKEといったパブリッククラウドの環境でも動作します。また、読者自身のパソコン環境にVirtualBox と Vagrant で仮想環境をセットアップすれば、自分だけの学習環境も構築できます。
 
 * [Minikube](https://github.com/takara9/vagrant-minikube)
-* [オリジナルのKubernetesクラスタ](https://github.com/takara9/vagrant-kubernete)
+* [オリジナルのKubernetesクラスタ](https://github.com/takara9/vagrant-kubernetes)
 
 Kubernetes環境と組み合わせて利用できる永続ストレージです。
 
