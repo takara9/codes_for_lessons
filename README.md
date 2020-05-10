@@ -42,6 +42,11 @@ Kubernetes環境と組み合わせて利用できる永続ストレージです�
 どうぞ、Docker や Kubernetes をお楽しみください。
 
 
+## 質問や不具合についての注意事項
+
+この学習用コードについての不具合は、Issue https://github.com/takara9/codes_for_lessons/issues  に投稿をお願いします。他の質問サイトなどに質問を投稿することは問題ありませんが、筆者は対応しません。
+
+
 
 
 
