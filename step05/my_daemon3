@@ -24,7 +24,7 @@ trap save TERM
 
 
 # メインループ
-while [ ture ];
+while true;
 do
     TM=`date|awk '{print $4}'`
     printf "%s : %s \n" $TM $COUNT
